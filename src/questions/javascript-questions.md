@@ -31,18 +31,65 @@ permalink: /questions/javascript-questions/index.html
   - new로 만들어진 객체는 prototype 속성은 없고, __proto__ 속성은 있다.
   ```
   function Person() {}
-  var joon = new Person()
-  var jisoo = new Person()
+  var joon = new Person()  // joon.__proto__ 는 Person 프로토타입 객체를 참조한다.
+  var jisoo = new Person() // jisoo.__proto__ 는 Person 프로토타입 객체를 참조한다.
 
   Person.prototype.getType = function() {
-    return '사람'
+    return '사람' // 프로토타입 객체에 멤버를 추가, 수정, 삭제를 할 때는 함수 안의 prototype 속성을 사용해야 한다.
+    // 프로토타입 멤버를 읽을 때는 함수안의 prototype속성 또는 객체 이름으로 접근한다.
   }
   console.log(joon.getType()) // 사람
   console.log(jisoo.getType()) // 사람
   ```
-  - 
+  ```
+  joon.getType = function() {
+    return '인간';
+  }
+  // 생성된 객체를 이용하여 프로토타입 객체의 멤버를 수정하면 프로토타입 객체에 있는 멤버를 수정하는 것이 아니라 자신의 객체에 멤버를 추가하는 것이다. joon 객체를 사용하여 getType()을 호출하면 프로토타입 객체의 getType()을 호출한 것이 아니다. joon 객체에 추가된 getType()을 호출한 것이다. 즉, 사용된 객체의 원형인 프로토타입 객체의 멤버를 수정할 경우는 멤버 추가와 같이 함수의 prototype 속성을 이용하여 수정한다.
+
+  console.log(joon.getType()) // 인간
+  console.log(jisoo.getType()) // 사람
+
+  jisoo.age = 25
+  console.log(joon.age) // undefined
+  console.log(jisoo.age) // 25
+
+  Perton.prototype.getType = function() {
+    return '인간';
+  }
+  console.log(jisoo.getType()) // 인간
+  ```
+  ```
+  결론 : 프로토타입 객체는 정의된 함수의 새로운 객체가 생성되기 위한 원형이 되는 객체입니다. 같은 원형으로 생성된 객체가 공통으로 참조하는 공간이다. 프로토타입 객체의 멤버를 추가, 수정, 삭제는 함수의 prototype 속성을 통해 접근해야 한다.
+
+  프로토타입이란? : JavaScript 에서는 기본 데이터 타입을 제외한 모든 것이 객체다. 객체가 만들어지기 위해서는 자신을 만드는데 사용된 원형의 프로토타입 객체를 이용하여 객체를 만든다. 이때 만들어진 객체 안에 __proto__ 속성이 자신을 만들어낸 원형을 의미하는 프로토타입 객체를 참조하는 숨겨진 링크가 있다. 이 숨겨진 링크를 프로토타입이라고 정의한다.
+  ```
 * Explain how prototypal inheritance works (Explain Prototype Chain 같이 설명)
-  - 
+  ```
+  function Person1() {}
+  Person1.prototype.getName = function() { return 'kim' }
+  const f1 = new Person1()
+  fi.getName()  // kim
+
+  class Human extends Person1{}
+  Human.prototype.getType = function() { return 'human' } // Human의 prototype속성을 통해 getType이라는 함수를 만들었다. Human을 원형으로 생성된 객체들이 getType을 참조 할 수 있다.
+
+  const h1 = new Human
+  h1.getName() // kim
+  // kim이 출력되는 이유 : h1은 Human의 객체이고, h1를 만들게 해 준 원형 객체의 프로토타입을 참조한다. Human의 getName()이 없으면, 상속받은 Person 프로토타입 객체에서 getName을 찾는다. (이때 kim이 출력)
+  만약 Person 프로토타입 객체에도 없다면 Person 이 상속받고 있는 Object 객체의 프로토타입에서 찾는데 여기서도 없으면 undefined를 출력한다. (prototype chain)
+  h1.getType() // human
+  // Human 프로토타입 객체에 getType함수를 생성했기 때문에 Person까지 찾지 않고 Human에서 찾은 human을 리턴시킨다.
+
+  const h2 = new Human
+  h2.getName = function() { return 'han' }
+  h2.getName() // han : 바로 위에서 h2객체 자신에 getName 함수를 만들었다. getName을 찾았고, 바로 han으로 리턴됨.
+  h1.getName() // kim
+  h2.getType() // human
+
+  ---> 함수를 정의하면 constructor, __proto__를 갖는 프로토타입 객체가 생성되고, 이 함수의 새로운 객체를 만들면 그 새로운 객체는 __proto__라는 속성을 갖는다. 이 새로운 객체의 __proto__ 는 새로운 객체를 만들게 해 준 원형의 프로토타입 객체를 참조한다. ( prototype chain 이 이 때문에 일어날 수 있다. )
+  // 
+  ```
 * What do you think of AMD vs CommonJS?
 * Explain why the following doesn't work as an IIFE(즉시실행함수표현 : Immediately Invoked Function Expression): `function foo(){ }();`.
   * What needs to be changed to properly make it an IIFE?
