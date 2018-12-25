@@ -103,15 +103,34 @@ permalink: /questions/javascript-questions/index.html
   // 
   ```
 * What do you think of AMD vs CommonJS?
+  - 
 * Explain why the following doesn't work as an IIFE(즉시실행함수표현 : Immediately Invoked Function Expression): `function foo(){ }();`.
+  - function foo(){} 여기는 함수 선언이고 ()는 함수를 호출하려고 시도했지만 이름이 지정되지 않았기 때문에 `Uncaught SyntacError : Unexpected token)` 에러를 던집니다.
+  - JavaScript 파서는 `function foo() {}와 () `로 읽는다.
   * What needs to be changed to properly make it an IIFE?
+    - `f(function foo(){})()` or `(function foo(){}())` 입니다.
 * What's the difference between a variable that is: `null`, `undefined` or undeclared?
+  - `undeclared` : 선언되지 않은 변수는 변수에 값을 할당하기 전에 (var, let, const)를 사용하여 생성되지 않은 변수에 값을 할당할 때 생성된다. `use strict` 하면 ReferenceError 발생시킴
+  - `undefined` : 변수는 선언되었지만 값이 할당되지 않은 변수, 자료형이 결정되지 않은 변수
+  - `null` : 변수를 선언하고 null이라는 빈 값을 할당한 경우, 자료형은 객체인데 비어있는 변수
+  - undefined == null --> true // == 비교연산자는 자료형이 다르면 자동 형변환으로 자료형을 강제로 맞춰서 비교하는 비교연산자이다. undefined와 null(object) 는 자료형이 다르니 자바스크립트 엔진이 알아서 통일해서 둘다 값이 없으니까 true를 반환한다. 이 경우 ===연산자(자료형까지 비교)를 사용해야 한다.
   * How would you go about checking for any of these states?
 * What is a closure, and how/why would you use one?
+  - 클로저는 외부함수의 변수와 매개변수에 접근 할 수 있는 내부함수를 말한다. 클로저는 함수와 그 함수가 선언된 렉시컬 환경의 조합이다. "렉시컬"은 렉시컬 범위 지정이 변수가 사용 가능한 위치를 결정하기 위해 소스 코드 내에서 변수가 선언된 위치를 사용한다는 사실을 나타낸다. 핵심 : 클로저는 외부 함수가 반환된 후에도 외부 함수의 변수 범위 체인에 접근 할 수 있는 내부함수이다.
+  - 데이터를 private하게 사용하기 위해
 * Can you describe the main difference between a `forEach` loop and a `.map()` loop and why you would pick one versus the other?
+  - forEach : 배열의 요소를 반복한다, 각 요소에 대한 콜백을 실행한다, 값을 반환하지 않는다.
+  - map : 배열의 요소를 반복한다, 각 요소에서 함수를 호출하여 결과로 새로운 배열을 작성하여 각 요소를 새 요소에 매핑한다.
+  - 주된 차이점은 .map()이 새로운 배열을 반환한다는 것이다. 결과가 필요하지만 원본 배열을 변경하고 싶지 않으면 .map()이 확실한 선택이다. 단순히 배열을 반복할 필요가 있다면 forEach가 좋은 선택이다.
 * What's a typical use case for anonymous functions?
+  - IIFE로 사용되어 지역 범위 내에서 일부 코드를 캡슐화하므로 선언된 변수가 전역 범위로 노출되지 않는다.
+  - 한번 사용되며 다른 곳에서는 사용할 필요가 없는 콜백으로 사용된다.
 * How do you organize your code? (module pattern, classical inheritance?)
+  (코드를 어떻게 구성합니까? 모듈 패턴? 코전적인 상속?)
 * What's the difference between host objects and native objects?
+  (호스트 객체와 내장 객체의 차이점은 무엇입니까?)
+  - 내장 객체는 JavaScript 언어의 일부인 객체이다. (예 : String, Math, Object, FUnction 등)
+  - 호스트 객체는 window, XMLHTTPRequest 등과 같이 런타임 환경(브라우저 또는 노드)에 의해 제공된다.
 * Difference between: `function Person(){}`, `var person = Person()`, and `var person = new Person()`?
 * What's the difference between `.call` and `.apply`?
 * Explain `Function.prototype.bind`.
@@ -151,10 +170,13 @@ duplicate([1,2,3,4,5]); // [1,2,3,4,5,1,2,3,4,5]
 * Explain the difference between synchronous and asynchronous functions.
 * What is event loop?
   * What is the difference between call stack and task queue?
+  - 이벤트 루프는 콜 스택을 모니터하고 태스크 큐에서 수행할 작업이 있는지 확인하는 단일 스레드 루프다.
+    콜 스택이 비어 있고 태스크 큐에 콜백 함수가 있는 경우, 함수는 큐에서 제외되고 실행될 콜 스택으로 푸시된다.
 * Explain the differences on the usage of `foo` between `function foo() {}` and `var foo = function() {}`
 * What are the differences between variables created using `let`, `var` or `const`?
 * What are the differences between ES6 class and ES5 function constructors?
 * Can you offer a use case for the new arrow `=>` function syntax? How does this new syntax differ from other functions?
+[예제](https://hanjungv.github.io/2018-02-03-1_JS_arrow_function/)
 * What advantage is there for using the arrow syntax for a method in a constructor?
 * What is the definition of a higher-order function?
 * Can you give an example for destructuring an object or an array?
