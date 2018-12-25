@@ -95,15 +95,69 @@ permalink: /questions/css-questions/index.html
   - 기본적으로 요소들은 `box-sizing : content-box ` 가 적용되고, 내용의 크기만 고려됩니다.
   - `box-sizing: border-box` 는 요소의 `width`와 `height`가 어떻게 계산되는지를 변경하여 `border`과 `padding`도 계산에 포함된다.
 * What is the CSS `display` property and can you give a few examples of its use?
+  - 요소를 어떻게 보여줄지를 결정한다.
 * What's the difference between inline and inline-block?
+  - block
+    - 부모 컨테이너의 너비를 채운다(크기)
+    - 새 줄에서 시작하고 그 옆에 HTML 요소를 허용하지 않는다.
+    - width, height 지정 가능
+    - vertical-align 정렬 불가능
+    - margin, padding 모든 방향에서 가능
+  - inline-block
+    - 내용에 따라 달라진다 (크기)
+    - 위치는 다른 콘텐츠와 함게 흐르고 다른 요소는 옆에 있는 것을 허용한다.
+    - width, height 가능
+    - vertical-align 정렬 불가능
+    - margin, padding 모든 방향에서 가능
+  - inline
+    - 내용에 따라 달라진다. (크기))
+    - 위치는 다른 콘텐츠와 함께 흐르고 다른 요소는 옆에 있는 것을 허용한다.
+    - width, height, vertical-align 불가능
+    - margin, padding : 수평방향만 가능
 * What's the difference between the "nth-of-type()" and "nth-child()" selectors?
+  - 둘 다 순서와 연관된 css의 선택자이다.
+  - nth-child : 모든 자식 요소의 순서에서 찾음
+  - nth-of-type : 해당하는 자식 태그 요소에서의 순서를 찾음
+  ```<div>
+      <p>test line 1</p> //X
+      <span>test line 2</span> //노랑
+      <p>test line3</p> //빨강
+      <p>test line4</p> //그린
+      <span>test line5</span> //X
+    </div>
+  ```
+  ```
+  <style>
+   p:nth-of-type(2) { color: red; }
+   p:nth-child(2) { color: blue; }
+   p:nth-child(4) { color: green; }
+   span:nth-child(1) { color: orange; }
+   span:nth-of-type(1) { color: yellow; }
+  </style>
+  ```
 * What's the difference between a relative, fixed, absolute and statically positioned element?
   - static : 기본 위치. 요소는 평소와 같이 페이지에 위치합니다.
   - relative : 별도의 프로퍼티를 지정하지 않는 이상 static과 동일하게 동작한다. 상대 위치가 지정된 엘리먼트에 top, right, bottom, left를 지정하면 기본 위치와 다르게 위치가 조정된다.
   - fixed : 뷰 포트에 상대적으로 위치가 지정되는데, 이는 페이지가 스크롤되더라도 늘 같은 곳에 위치한다.
   - absolute : 뷰포트에 상대적으로 위치가 지정되는게 아니라 가장 가까운 곳에 위치한 부모 요소에 상대적으로 위차가 지정된다는 점을 제외하면 fixed와 비슷하게 동작한다.
 * What existing CSS frameworks have you used locally, or in production? How would you change/improve them?
+  - 
 * Have you played around with the new CSS Flexbox or Grid specs?
+  - flex-grow 를 사용해보았지만, 브라우저에서 비호환성 문제가 있었다.
 * Can you explain the difference between coding a web site to be responsive versus using a mobile-first strategy?
+  - 반응형 웹사이트를 만드는 것은 일부 요소가 미디어 쿼리를 통해 장치의 화면 크기(일반적으로 뷰포트 너비)에 따라 크기나 기타 기능을 조정하도록 반응함을 의미한다.
+  - 모바일 우선 전략 또한 반응형이지만, 모바일 장치에 대한 모든 스타일을 정의해야하며 나중에 다른 장치에 대한 특정 규칙을 추가해야 한다.
+  - 모바일 우선 전략의 장점은 모바일 장치에서 적용되는 모든 규칙이 미디어 쿼리에 대해 유효성 검사를 받을 필요가 없어서 뛰어난 성능을 발휘한다.
+  - 모바일 우선 전략의 장점2 반응형 CSS 규칙과 관련하여 보다 명확한 코드 작성
 * Have you ever worked with retina graphics? If so, when and what techniques did you use?
+  - 아니요
+* 반응형 디자인은 적응형 디자인과 어떻게 다른가?
+  - 반응형 웹은 하나의 템플릿을 사용해 모든 기기에 대응하는데 반해, 적응형 웹은 선별된 기기 유형에 독립적인 템플릿이 요구된다. 즉, 별도 페이지 제작이 필요하다
+  - 적응형 웹이 반영된 예로 네이버, 다음 같은 포털 사이트를 들 수 있는데 기존부터 서비스 되고 있는 사이트 변경 없이, 모바일 환경에 대응하기 위해 별도의 url을 통해 서비스 합니다. 모바일 환경에서 기존 사이트 주소로 접속할 경우, 이를 감지하여 모바일 전용 페이지로 리다이렉션 합니다.
 * Is there any reason you'd want to use `translate()` instead of *absolute positioning*, or vice-versa? And why?
+  - 브라우저의 성능 문제로 볼 수 있다. `transform` 이나`opacity`를 변경하면 브라우저의 리플로우나 리페인트가 트리거되지 않고 컴포지션만 실행되는 반면, 절대 위치 값을 변겨하면 '리플로우'가 발생한다. `transform`을 사용하면 브라우저에서 이 요소에 위한 GPU레이어를 생성하지만 포지션 위치 속성 변경은 CPU를 사용한다. 그러므로 `translate()`가 더 효율적이며 매끄러운 애니메이션을 위한 페인트 시간이 짧아진다.
+* 블럭 내 자식 요소를 중앙 정렬하는 방법은?
+``` div {
+  display: block;
+  margin: 0 auto;
+}```
