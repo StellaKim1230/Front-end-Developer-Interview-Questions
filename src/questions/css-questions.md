@@ -157,7 +157,9 @@ permalink: /questions/css-questions/index.html
 * Is there any reason you'd want to use `translate()` instead of *absolute positioning*, or vice-versa? And why?
   - 브라우저의 성능 문제로 볼 수 있다. `transform` 이나`opacity`를 변경하면 브라우저의 리플로우나 리페인트가 트리거되지 않고 컴포지션만 실행되는 반면, 절대 위치 값을 변겨하면 '리플로우'가 발생한다. `transform`을 사용하면 브라우저에서 이 요소에 위한 GPU레이어를 생성하지만 포지션 위치 속성 변경은 CPU를 사용한다. 그러므로 `translate()`가 더 효율적이며 매끄러운 애니메이션을 위한 페인트 시간이 짧아진다.
 * 블럭 내 자식 요소를 중앙 정렬하는 방법은?
-``` div {
+```
+div {
   display: block;
   margin: 0 auto;
-}```
+}
+```
