@@ -304,16 +304,58 @@ duplicate([1,2,3,4,5]); // [1,2,3,4,5,1,2,3,4,5]
 * Why would you use something like the `load` event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?
   - load 이벤트는 문서로딩 프로세스가 끝날 때 발생된다. 이 시점에서 문서의 모든 객체가 DOM에 있고, 모든 이미지, 스크립트, 링크 및 하위 프레임로딩이 완료된다. DOM 이벤트 DomContentLoaded는 페이지의 DOM이 생성된 후에 발생하지만 다른 리소스가 로딩되기를 기다리지 않습니다. 이것은 초기화되기 전까지 전체 페이지가 로드될 필요가 없는 경우에 선호된다.
 * Explain what a single page app is and how to make one SEO-friendly.
-* What is the extent of your experience with Promises and/or their polyfills?
-* What are the pros and cons of using Promises instead of callbacks?
+  - SPA 장점
+    * 전체 페이지 새로고침으로 인해 페이지 탐색 사이에 하얀 화면이 보이지 않아 앱이 더 반응적으로 느껴진다.
+    * 동일한 애셋을 페이지 로드마다 다시 다운로드 할 필요가 없어서 서버에 대한 HTTP 요청이 줄어든다.
+    * 클라이언트와 서버 사이의 고려해야 할 부분을 명확하게 구분한다.
+  - SPA 단점
+    * 여러 페이지에 필요한 프레임워크, 앱 코드, 애셋로드로 인해 초기 페이지로드가 무거워진다.
+    * 모든 요청을 단일 진입점으로 라우트하고 클라이언트 측 라우팅이 한 곳에 인계받을 수 있도록 서버를 구성하는 추가 단계가 수행되어진다.
+    * SPA는 콘텐츠를 렌더링하기 위해 JavaSCript에 의존하지만 모든 검색 엔진이 크롤링 중에 JavaScript를 실행하지는 않으며 페이지에 빈 콘텐츠가 표시될 수 있다. 
+* What is the extent of your experience with Promises and/or their polyfills?(Promise, Polyfill 에 대한 당신의 경험도는 어느 정도 인가?)
+  - Promise는 어느 시점에 resolve된 값 또는 resolve 되지 않은 이유 중 하나의 값을 생성할 수 있는 객체이다. promise는 fulfilled, rejected, pending 3가지 상태 중 하나일수 있다. promise 사용자는 콜백을 붙여서 fulfill된 값이나 reject된 이유를 처리할 수 있다.
+  - ES6는 즉시 사용할 수 있는 Promise를 지원하며 일반적으로 요즘 polyfill은 필요 없다.
+* What are the pros and cons of using Promises instead of callbacks?(Callback 대신에 Promise를 사용할 때의 장점과 단점은 무엇입니까?)
+  - 장점
+    * 이해하기 어려운 콜백 지옥을 피할 수 있다.
+    * 읽기 쉬운 .then()을 이용하여 연속적인 비동기 코드를 쉽게 작성할 수 있다.
+    * Promise.all()을 사용하여 병렬 비동기 코드를 쉽게 작성 할 수 있다.
+  - 단점
+    * 약간 더 복잡한 소스코드
+    * ES6을 지원하지 않는 이전 브라우저에서 이를 사용하기 위해서는 polyfill을 로드해야 한다.(폴리필은 개발자가 특정 기능이 지원되지 않는 브라우저를 위해 사용할수 있는 플러그인)
+* async/await가 promise를 사라지게 만들수 있는 이유
+  - 간결함과 깔끔함
+  - 에러 핸들링 (try/catch)
+  - 분기
+  - 중간값
+  - 디버깅이 쉬워진다.
+[예제](https://medium.com/@constell99/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EC%9D%98-async-await-%EA%B0%80-promises%EB%A5%BC-%EC%82%AC%EB%9D%BC%EC%A7%80%EA%B2%8C-%EB%A7%8C%EB%93%A4-%EC%88%98-%EC%9E%88%EB%8A%94-6%EA%B0%80%EC%A7%80-%EC%9D%B4%EC%9C%A0-c5fe0add656c)
 * What are some of the advantages/disadvantages of writing JavaScript code in a language that compiles to JavaScript?
-* What tools and techniques do you use debugging JavaScript code?
-* What language constructions do you use for iterating over object properties and array items?
+* What tools and techniques do you use debugging JavaScript code?(JavaScript 코드를 디버깅 하기 위해 어떤 도구와 기술을 사용합니까?)
+  - Vue ( vuex DevTools)
+  - JavaScript : Chrome Devtools, debugger statement, console.log
+* What language constructions do you use for iterating over object properties and array items?(오브젝트 속성 및 배열 항목을 반복할 때 사용하는 언어 구조는 무엇입니까?)
+  - 오브젝트 경우
+    * for  반복문 : 사용하기 전에 hasOwnProperty(property) 체크 추가
+    * Object.keys() : 전달하는 객체의 열거 가능한 모든 속성을 나열하는 메소드
+    * Object.getOwnPropertyNames() : 전달하는 객체의 열거 가능한 속성과 열거되지 않는 모든 속성을 나열하는 메소드
+  - 배열 경우
+    * for 반복문 :
+    * forEach : 필요한 모든 것이 배열 요소라면 index를 사용할 필요가 없기 때문에 이 구조가 더 필요할 수 있다. 
+  - 대부분의 경우 .forEach메서드를 선호하지만 무엇을 하느냐에 따라서 각 상황에 맞게 사용하는 것이 좋다. for 루프는 break를 사용하여 루프를 조기에 종료하거ㅏㄴ 루프 당 두 번 이상 반복자를 증가시키는 것과 같이 더 많은 유연성을 허용한다.
 * Explain the difference between mutable and immutable objects.
   * What is an example of an immutable object in JavaScript?
   * What are the pros and cons of immutability?
+    - 장점 : 변경점 찾기 및 디버깅이 쉬움
+    - 단점 : mutable한 코드보다 훨씬 느림
   * How can you achieve immutability in your own code?
+  - Immutability는 객체가 생성된 이후 그 상태를 변경할 수 없는 디자인 패턴을 말한다.
+  - 객체는 참조 형태로 전달하고 전달 받는다. 객체가 참조를 통해 공유되어 있다면 그 상태가 언제든지 변경될 수 있기 때문에 문제가 될 가능성도 커지게 된다. 이는 객체의 참조를 가지고 있는 어떤 장소에서 객체를 변경하면 참조를 공유하는 모든 장소에서 그 영향을 받기 때문인데 이것이 의도한 동작이 아니라면 참조를 가지고 있는 다른 장소에 변경 사실을 통지하고 대처해야 한다.
+  - 의도하지 않은 객체의 변경이 발생하는 원인의 대다수는 "레퍼런스를 참조한 다른 객체에서 객체를 변경"하기 때문이다. 이 문제의 해결 방법은 객체를 불변객체로 만들어 프로퍼티의 변경을 방지하며 객체의 변경이 필요한 경우에는 참조가 아닌 객체의 방어적 복사를 통해 새로운 객체를 생성한 후 변경한다. 
 * Explain the difference between synchronous and asynchronous functions.
+  (동기 및 비동기 함수의 차이점을 설명하십시오)
+  - 동기 함수에서는 다음 명령문이 실행되기 전에 명령문이 완료됩니다. 이 경우 프로그램은 명령문의 순서대로 정확하게 평가되고 명령문 중 하나가 매우 오랜 시간이 걸리면 프로그램 실행이 일시중지됩니다.
+  - 비동기 함수는 일반적으로 파라미터를 통해서 콜백을 받아들이고, 비동기 기능은 일반적으로 매개변수로 콜백을 허용하며 비동기 기능이 호출된 후 즉시 다음 줄에서 실행이 계속 된다. 
 * What is event loop?
   * What is the difference between call stack and task queue?
   - 이벤트 루프는 콜 스택을 모니터하고 태스크 큐에서 수행할 작업이 있는지 확인하는 단일 스레드 루프다.
@@ -335,7 +377,10 @@ duplicate([1,2,3,4,5]); // [1,2,3,4,5,1,2,3,4,5]
   }
   ```
 * What are the differences between variables created using `let`, `var` or `const`?
-  - 
+  - var 키워드를 사용하여 선언된 변수는 함수가 생성된 함수나 함수 밖에서 생성된 함수에 전역 오브젝트로 적용된다. let과 const는 블록 범위이다. 즉 가장 가까운 중괄호 내에서만 접근 가능하다.
+  - var 은 변수 호이스팅이 가능하다. 즉, 변수가 선언되기 전에 코드에서 참조될 수 있습니다. let 과 const는 변수 호이스팅이 안되고 에러를 던진다.
+  - var을 사용하여 변수를 다시 선언해도 오류는 발생하지 않지만 let과 const는 오류를 발생한다.
+  - let은 변수의 값을 재할당 할 수 있지만, const는 재할당 할 수 없다
 * What are the differences between ES6 class and ES5 function constructors?
   ```
   // ES5 함수 생성자
