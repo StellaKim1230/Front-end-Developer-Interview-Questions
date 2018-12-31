@@ -319,16 +319,143 @@ duplicate([1,2,3,4,5]); // [1,2,3,4,5,1,2,3,4,5]
   - 이벤트 루프는 콜 스택을 모니터하고 태스크 큐에서 수행할 작업이 있는지 확인하는 단일 스레드 루프다.
     콜 스택이 비어 있고 태스크 큐에 콜백 함수가 있는 경우, 함수는 큐에서 제외되고 실행될 콜 스택으로 푸시된다.
 * Explain the differences on the usage of `foo` between `function foo() {}` and `var foo = function() {}`
+  - 전자는 함수 선언, 후자는 함수 표현. 주요한 차이점은 함수 선언은 몸체가 호이스트 되지만 함수 표현의 몸체는 호이스트가 되지 않는다.(변수와 동일한 호이스팅 동작을 가짐) , 함수 표현식을 정의하기 전에 호출하려고 하면 `Uncaught TypeError : XXX is not function` 오류 발생한다.
+  - 함수 선언
+  ```
+  foo()
+  function foo() {
+    console.log('FPPPP')
+  }
+  ```
+  - 함수 표현
+  ```
+  foo() // Uncaught TypeError: foo는 함수가 아니다.
+  var foo = function() {
+    console.log('FOPP')
+  }
+  ```
 * What are the differences between variables created using `let`, `var` or `const`?
+  - 
 * What are the differences between ES6 class and ES5 function constructors?
+  ```
+  // ES5 함수 생성자
+  function Person(name) {
+    this.name = name
+  }
+
+  // ES6 클래스
+  class Person {
+    constructor(name) {
+      this.name = name
+    }
+  }
+  ```
+  생성자의 주요 차이점은 상속을 할 때 발생한다.
+  ```
+  // ES5 함수 생성자
+  function Student(name, studentId) {
+    // 수퍼 클래스의 생성자를 호출하여 수퍼 클래스에 상속된 멤버를 초기화한다.
+    Person.call(this, name)
+
+    // 서브 클래스의 멤버를 초기화한다
+    this.studentId = studentId
+  }
+
+  Student.prototype = Object.create(Person.prototype)
+  Student.prototype.contstructor = Student
+
+  // ES6 클래스
+  Class Student extends Person {
+    constructor(name, studentId) {
+      super(name)
+      this.studentId = studentId
+    }
+  }
+  ```
 * Can you offer a use case for the new arrow `=>` function syntax? How does this new syntax differ from other functions?
+  - arrow function의 장점
+    * 짧은 함수를 작성할 수 있게 된다.
+    * 기존 자바스크립트에서 this는 dynamic scoping이 되었는데 이 경우 lexical scoping을 사용하게 된다. 고로 따로 binding을 사용하지 않아도 된다. 정리하면 `자신만의 this를 생성하지 않고 자신을 포함하고 있는 context의 this를 이어 받는다.`
+  - lexical scope란?
+    * 렉시컬 스코프란 `소스코드가 작성된 그 문맥`에 결정된다고 합니다.
 [예제](https://hanjungv.github.io/2018-02-03-1_JS_arrow_function/)
 * What advantage is there for using the arrow syntax for a method in a constructor?
-* What is the definition of a higher-order function?
+* What is the definition of a higher-order function?(고차함수의 정의는 무엇인가?)
+  - 고차 함수는 다른 함수를 매개 변수로 사용하여 일부 데이터에서 작동하거나 결과로 함수를 반환하는 함수이다.
+  - 전형적인 예로는 배열과 함수를 인수로 취하는 map이다. map 은 고차 함수를 사용하여 배열의 각 항목을 변환하고 변환 된 데이터를 새로운 배열로 반환한다.
 * Can you give an example for destructuring an object or an array?
+  - 디스트럭쳐링은 ES6에서 사용할 수 있는 표현식으로 객체 또는 배열의 값을 추출하여 다른 변수에 배치하는 간결하고 편리한 방법을 제공한다.
+  배열 디스트럭쳐링
+  ```
+  // 변수 할당
+  const foo = ['one', 'two', 'three']
+  const [one, two, three] = foo;
+
+  console.log(one) // "one"
+  console.log(two) // "two"
+  console.log(three) // "three"
+
+  // 변수 교환
+  let a = 1
+  let b = 3
+
+  [a, b] = [b, a]
+  console.log(a) // 3
+  console.log(b) // 1
+  ```
+  객체 디스트럭쳐링
+  ```
+  const o = { p: 42, q: true }
+  const { p, q } = o;
+
+  console.log(p) // 42
+  console.log(q) // true
+  ```
 * ES6 Template Literals offer a lot of flexibility in generating strings, can you give an example?
+  - 백틱 사용(`)
+  - 백틱을 사용하고 그 안에 변수들은 ${}로 감싸주면 자바스크립트 엔진이 알아서 합쳐준다.
 * Can you give an example of a curry function and why this syntax offers an advantage?
+  - curry : 함수와 인자를 다루는 기법이다.
+  - 커링은 함수 하나가 n개의 인자를 받는 과정을 n개의 함수로 각각의 인자를 받도록 하는 것이다. 
+  - 부분적으로 적용된 함수를 체인으로 계속 생성해 결과적으로 값을 처리한다. 
+  - 필요한 인자를 모두 채울때까지 인자를 적용해 나가다가 모든 인자의 개수가 채워지면 함수의 본체를 실행하는 기법이다.
+  ```
+  function _curry(fn) {
+    return function(a, b) {
+      return arguments.length === 2 ? fn(a, b) : function(b) { return fn(a, b);};
+    }
+  }
+
+  var add = _curry(function(a, b) {
+    return a + b;
+  });
+
+  var add10 = add(10);
+  console.log( add10(5) );
+  console.log( add(5)(3) );
+  console.log( add(10, 2) );
+  ```
+  - 결국은 본체 함수인 _curry 안의 인자인 함수를 값으로 들고 있다가 원하는 시점까지 미뤄뒀다가 최종적으로 평가하는 기법이다. 함수가 함수를 대신 실행하거나 함수가 함수를 리턴하는 방식이 함수형 프로그래밍이다.
 * What are the benefits of using `spread syntax` and how is it different from `rest syntax`?
-* How can you share code between files?
+  - spread syntax
+    * 확산 문법이란 es6에서 추가된 문법으로 ...를 사용해서 배열의 나머지 값들을 받아오거나 편하게 화장시킬 수도 있다.
+    ```
+    function spreadArray(arr) {
+      return [...arr, 'dookie']
+    }
+    var result = spreadArray(['I', 'really'])  // ['I', 'really', 'dookie']
+
+    var person = {
+      name: 'Todd',
+      age: 29
+    }
+
+    var copyOfTodd = {...person}
+    ```
+  - rest syntax
+    * 나머지 구문은 2개 이상의 요소를 하나의 요소로 모읍니다.
+* How can you share code between files? (파일간에 코드를 공유하려면 어떻게 해야 하는가?)
+  - JavaScript 환경에 따라 다르다.
+  - 클라이언트(브라우저 환경)에서는 변수/함수가 전역범위(`window`)에 선언되어있는 한 모든 스크립트가 이를 참조할 수 있습니다. 서버(Node.js)에서 일반적인 방법은 CommonJS를 사용하는 것입니다. 각 파일은 모듈로 취급되며 변수와 함수를 `module.exports` 객체에 첨부하여 내보낼 수 있다.
 * Why you might want to create static class members?
   - 정적 클래스 멤버는 클래스의 특정 인스턴스에 연결되지 않으며 어떤 인스턴스가 이를 참조하는지에 관계없이 동일한 값을 가진다. 정적 속성은 일반적으로 구성 변수이며 정적 메서드는 일반적으로 인스턴스의 상태에 의존하지 않는 순수 유틸리티 함수이다.
