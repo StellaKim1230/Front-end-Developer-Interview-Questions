@@ -264,18 +264,45 @@ permalink: /questions/javascript-questions/index.html
   console.log(input.value) // Hello World
   ```
 * Why is extending built-in JavaScript objects not a good idea?
+  - 내장 JavaScript 객체를 확장한다는 것은 prototype에 속성/함수를 추가한다는 것을 의미합니다. 이것은 처음에는 좋은 생각처럼 보일 수 있지만 실제로는 위험하다. 여러분의 코드가 동일한 contains 메소드를 추가함으로써 Array.prototype 을 확장하는 여러가지 라이브러리를 사용한다고 상상해본다. 이러한 구현은 메소드를 서로 덮어쓰게 되며 이 두 메소드의 동작이 동일하지 않으면 코드가 망가질 것이다. 네이티브 객체를 확장할 수 있는 유일한 경우는 폴리필을 만들려고 할 떄이다. JavaSCript 사양의 일부이지만 오래된 브라우저이기 때문에 사용자 브라우저에 없을 수도 있는 메서드에 대한 고유한 구현을 제공해야 할 경우이다.
 * Difference between window load event and document DOMContentLoaded event?
+  - DOMContentLoaded 이벤트는 스타일시트, 이미지, 서브프레임이 로딩을 기다리지 않고 초기 HTML 문서가 완전히 로드되고 파싱될 때 발생한다.
+  - window의 load 이벤트는 DOM과 모든 종속 리소스와 에셋들이 로드된 후에만 발생한다.
 * What is the difference between `==` and `===`?
+  - == 는 추상 동등 연산자이고 === 는 완전 동등 연산자이다. == 연산자는 타입 변환이 필요한 경우 타입 변환을 한 후에 동등한지 비교할 것이다. === 연산자는 타입 변환을 하지 않으므로 두 값이 같은 타입이 아닌 경우 ===는 단순히 false를 반환한다 (=== 는 타입 체크까지 해준다)
 * Explain the same-origin policy with regards to JavaScript.
+  - JavaScript 가 도메인 경계를 넘어서 요청하는 것을 방지한다. origin은 URI 체계, 호스트 이름 및 포트 번호의 조합으로 정의된다. 이 정책은 한 페이지의 악의적인 스크립트가 해당 페이지의 문서 객체 모델을 통해 다른 웹 페이지의 중요한 데이터에 접근하는 것을 방지한다.
 * Make this work:
 ```javascript
 duplicate([1,2,3,4,5]); // [1,2,3,4,5,1,2,3,4,5]
 ```
+```
+  function duplicate(arr) {
+    return arr.concat(arr)
+  }
+  duplicate([1, 2, 3, 4, 5])
+```
 * Why is it called a Ternary operator, what does the word "Ternary" indicate?
+  - 삼항을 나타내고 삼항 표현식은 세각지 피연산자, 테스트 조건문, "then" 표현석, "else" 표현식을 받는다.
 * What is `"use strict";`? what are the advantages and disadvantages to using it?
+  - 전체 스크립트나 개별 함수에 엄격 모드를 사용하는데 사용되는 명령문이다. Strict 모드는 JavaScript 제한된 번형에서 선택하는 방법이다.
+  - 장점
+    * 실수로 전역변수를 만드는 것이 불가능하다.
+    * 암묵적으로 실패한 예외를 throw 하지 못하는 할당을 만든다.
+    * 삭제할 수 없는 속성을 삭제하려고 시도한다
+    * 함수의 매개변수 이름은 고유해야 한다
+    * this는 전역 컨텍스트에서 undefined이다.
+    * 예외를 발생시키는 몇 가지 일반적인 코딩을 잡아낸다
+    * 헷갈리거나 잘 모르는 기능을 사용할 수 없게 한다.
+  - 단점
+    * 일부 개발자는 익숙하지 않은 기능이 많다
+    * `functon.caller`와 `function.arguments` 에 더 이상 접근 할 수 없다
+    * 서로 다른 엄격한 모드로 작성된 스크립트를 병합하면 문제가 발생할 수 있다.
 * Create a for loop that iterates up to `100` while outputting **"fizz"** at multiples of `3`, **"buzz"** at multiples of `5` and **"fizzbuzz"** at multiples of `3` and `5`
 * Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it?
+  - 모든 스크립트는 전역 스코프에 접근할 수 있으며 모든 사람이 전역 네임스페이스를 사용하여 변수를 정의하면 충돌이 발생할 수 있다. 모듈 패턴(IIFEs)을 사용하여 변수를 로컬 네임페이스 내에 캡슐화해야한다.
 * Why would you use something like the `load` event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?
+  - load 이벤트는 문서로딩 프로세스가 끝날 때 발생된다. 이 시점에서 문서의 모든 객체가 DOM에 있고, 모든 이미지, 스크립트, 링크 및 하위 프레임로딩이 완료된다. DOM 이벤트 DomContentLoaded는 페이지의 DOM이 생성된 후에 발생하지만 다른 리소스가 로딩되기를 기다리지 않습니다. 이것은 초기화되기 전까지 전체 페이지가 로드될 필요가 없는 경우에 선호된다.
 * Explain what a single page app is and how to make one SEO-friendly.
 * What is the extent of your experience with Promises and/or their polyfills?
 * What are the pros and cons of using Promises instead of callbacks?
@@ -304,3 +331,4 @@ duplicate([1,2,3,4,5]); // [1,2,3,4,5,1,2,3,4,5]
 * What are the benefits of using `spread syntax` and how is it different from `rest syntax`?
 * How can you share code between files?
 * Why you might want to create static class members?
+  - 정적 클래스 멤버는 클래스의 특정 인스턴스에 연결되지 않으며 어떤 인스턴스가 이를 참조하는지에 관계없이 동일한 값을 가진다. 정적 속성은 일반적으로 구성 변수이며 정적 메서드는 일반적으로 인스턴스의 상태에 의존하지 않는 순수 유틸리티 함수이다.
