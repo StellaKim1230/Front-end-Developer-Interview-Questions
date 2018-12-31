@@ -132,19 +132,137 @@ permalink: /questions/javascript-questions/index.html
   - 내장 객체는 JavaScript 언어의 일부인 객체이다. (예 : String, Math, Object, FUnction 등)
   - 호스트 객체는 window, XMLHTTPRequest 등과 같이 런타임 환경(브라우저 또는 노드)에 의해 제공된다.
 * Difference between: `function Person(){}`, `var person = Person()`, and `var person = new Person()`?
-* What's the difference between `.call` and `.apply`?
+  - JavaScript의 생성자에 대해 묻는 질문이다.
+  ```
+  function Person(name) { // 함수 선언일 뿐이다.
+    this.name = name
+  }
+
+  // 생성자가 아니며 Person을 함수로 호출한다.
+  // 일반적으로 생성자는 아무것도 반환하지 않으므로 일반 함수처럼 생성자를 호출하면 undefined가 반환되고 지정된 변수에 할당된다.
+  var person = Person('John')
+  console.log(person) // undefined
+  console.log(person.name) // Uncaught TypeError : 정의되지 않은 'name' 프로퍼티를 읽을 수 없다.
+
+  // Person.prototype을 상속받은 new 연산자를 사용해서 Person 객체의 인스턴스를 생성한다.
+  var person = new Person('John')
+  console.log(person) // Person { name: "John" }
+  console.log(person.name) // "john"
+  ```
+* What's the difference between `.call` and `.apply` and `.bind`?
 [예제](http://www.kimsatgod.com/call-apply-bind-%EC%B0%A8%EC%9D%B4/)
+  - 셋 다 Context를 조정하기 위한 함수이다.
+  - 함수 안에서 this를 사용할 때 대체 this가 어디냐를 조정하는 것인데, 기본적으로 브라우저에서 this는 window 객체를 가리킨다.
+  - 객체의 메서드는 해당 객체를 가리키게 된다. 하지만 객체의 메서드만 따로 변수로 참조하는 경우엔 이 Context가 window로 되어 버린다. 따라서 Context를 조정해야 하 일이 생긴다.
+  ```
+  // this부분에 객체를 넣어주면 그걸 가리키게된다. 특이사항은 일일이 콤마로 구분해서 넣어줘야 함
+  func.call(this, arg1, arg2, ...argN);
+
+  // call()과 기능은 같지만 파라미터를 배열로 넘겨준다는 특징이 있다.
+  func.apply(this, arguments)
+  ```
+  - call(), apply() vs bind()
+  - call(), apply()는 함수가 실행이 되고 bind()는 아니다. bind()는 새로운 함수 인스턴스를 생성된다, 즉 바로 호출하지 않고 context가 조정된 함수를 반환한다는 의미.
+
+  ```
+  // 새로운 함수 인스턴스를 생성한다는 말을 생각해보면
+  function func() {
+    console.log('this.name: ', this.name)
+  }
+  var a = { name: 'a' }
+  var b = { name : 'b' }
+  var c = { name: 'c' }
+
+  var bind_a = func.bind(a);
+  var bind_b = func.bind(b);
+  var bind_c = func.bind(c);
+
+  bind_a()
+  bind_b()
+  bind_c()
+
+  // 출력 결과
+  // this.name : a
+  // this.name : b
+  // this.name : c
+  ```
+  - 결론
+    * 셋 다 컨텍스트를 조정한다.
+    * call(), apply()는 바로 호출하고, bind()는 바로 호출하지 않는다.
+    * call()은 파라미터를 콤마로 구분해서 일일이 넘겨준다.
+    * apply()는 파라미터를 배열로 넘긴다.
+
 * Explain `Function.prototype.bind`.
+  - 다른 함수로 전달하고자 하는 클래스의 메소드에서 this의 값을 바인딩 할 때 가장 유용하다.
+  - bind() 메소드는 호출될 때 this 키워드가 제공된 값으로 설정되고 새로운 함수가 호출될 때 주어진 인자 앞에 주어진 시퀀스가 새로운 함수를 생성한다.
 * What's the difference between feature detection, feature inference, and using the UA string?
+  - Feature Detection은 브라우저가 특정 코드 블록을 지원하는지에 따라 다른 코드를 실행하도록 하여, 일부 브라우젖에서 항상 오류가 발생하도록 한다.
+  - Feature Inference 는 Feature Detection고 마찬가지로 기능을 확인하지만 다른 함수도 존재한다고 가정하고 사용한다.
 * Explain Ajax in as much detail as possible.
+  - Asynchronous Javascript And Xml(비동기 자바스크립트와 xml)의 약자입니다. JavaScript를 사용한 비동기 통신, 클라이언트와 서버간에 XML 데이터를 주고 받는 기술이라고 할 수 있다.
+  - 비동기 방식이란 웹페이지를 리로드하지 않고 데이터를 불러오는 방식입니다. 장점은 페이지 리로드의 경우 전체 리소스를 닫시 불러와야 하는데 (이미지, 자바스크립트, 기타 코드 등) 모두 재요청할 경우 불필요한 리소스 낭비가 발생하게 되지만 비동기식 방식을 이용할 경우 필요한 부분만 불러와 사용할 수 있으므로 장점이 있다.
 * What are the advantages and disadvantages of using Ajax?
+  - 장점
+    * 웹페이지의 속도향상
+    * 서버의 처리가 완료 될때까지 기다리지 않고 처리 가능하다.
+    * 서버에서 Data만 전송 하면 되므로 전체적인 코딩의 양이 줄어든다.
+    * 기존 웹에서는 불가능했던 다양한 UI를 가능하게 해준다.
+  - 단점
+    * 히스토리 관리가 안된다.
+    * 연속적으로 데이터를 요청하면 서버 부하가 증가할 수 있다.
+    * XMLHttpRequest를 통해 통신을 하는 경우 사용자에게 아무런 진행 정보가 주어지지 않는다. 그래서 아직 요청이 완료되지 않았는데 사용자가 페이지를 떠나거나 오작동할 우려가 발생하게 된다.
 * Explain how JSONP works (and how it's not really Ajax).
+  - JSON with Padding은 현재 페이지에서 cross-oprigin 도메인으로의 Ajax 요청이 허용되지 않기 때문에 웹브라우저에서 cross-domain정책을 우회하는데 사용되는 방법이다.
 * Have you ever used JavaScript templating?
   * If so, what libraries have you used?
-* Explain "hoisting".
+  - Lodash를 사용해봤습니다.
+* Explain "hoisting". (hoist : 끌어올린다.)
+  - 호이스팅은 코드에서 변수 선언의 동작을 설명하는데 사용된다. `var` 키워드로 선언 혹은 초기화된 변수는 현재 스코프의 최상위까지 `호이스팅` 됩니다. 그러나 선언문만 호이스팅 되며 할당은 그대로다. 아래 예제.
+  ```
+  // var 선언이 호이스팅된다.
+  console.log(foo) // undefined
+  var foo = 1
+  console.log(foo) // 1
+
+  // let/const 선언은 호이스팅이 안된다.
+  console.log(bar) // ReferenceError : bar는 정의되지 않았습니다.
+  let bar = 2
+  console.log(bar) // 2
+  ```
+  - 함수 선언은 바디를 호이스팅되는 반면 변수 선언 형태로 작성된 함수 표현식은 변수 선언만 호이스팅 된다.
+  ```
+  // 함수 선언
+  console.log(foo) // [Function: foo]
+  foo() // 'FOOOOOO'
+  function foo() {
+    console.log('FOOOO)
+  }
+  console.log(foo) // [Function: foo]
+
+  // 함수 표현
+  console.log(bar) //undefined
+  bar() // Uncaught TypeError : bar는 함수가 아니다.
+  var bar = function() {
+    console.log('BARRRR')
+  }
+  console.log(bar) // [Function: bar]
+  ```
 * Describe event bubbling.
+  - DOM 요소에서 이벤트가 트리거되면 리스너가 연결되어 있는 경우 이벤트 처리를 시도한 다음 해당 이벤트가 부모에게 버블링되고 같은 이벤트가 발생한다. 이 버블링은 요소의 조상 `document` 까지 계속적으로 발생시킵니다.
 * Describe event capturing.
+  - event bubbling과 반대. 하위로 이벤트 전파
 * What's the difference between an "attribute" and a "property"?
+  - `attribute`는 HTML마크업에 정의되지만 `property`는 DOM에 정의된다.
+  `<input type="text" value="Hello">`
+  ```
+  const input = document.querySelector('input')
+  console.log(input.getAttribute('value)) //Hello
+  console.log(input.value) // Hello
+
+  // 텍스트 필드에 'World"를 추가하면 아래와 같다.
+  console.log(input.getAttribute('value')) // Hello
+  console.log(input.value) // Hello World
+  ```
 * Why is extending built-in JavaScript objects not a good idea?
 * Difference between window load event and document DOMContentLoaded event?
 * What is the difference between `==` and `===`?
