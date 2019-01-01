@@ -100,13 +100,13 @@ permalink: /questions/css-questions/index.html
 * What's the difference between inline and inline-block?
   - none : 보이지 않음
   - block
-    - <div>, <p> 태그 등이 이에 해당된다
+    - `<div>`, `<p>` 태그 등이 이에 해당된다
     - 가로 길이가 기본적으로 100%이며, block인 태그를 이어서 사용하면 줄바꿈 되어 보인다.
     - width, height 속성을 지정 할 수 있으며, 레이아웃 배치시 주로 사용한다.
   - inline-block
     - block과 inline 의 중간 형태라고 볼 수 있다. 줄 바꿈이 되지는 않지만 크기를 지정할 수 있다.
   - inline
-    - <span>, <b>, <i> 태그 등이 해당된다.
+    - `<span>`, `<b>`, `<i>` 태그 등이 해당된다.
     - block과 달리 줄 바꿈이 되지 않고, width와 height 지정 할 수 없다.
 * What's the difference between the "nth-of-type()" and "nth-child()" selectors?
   - 둘 다 순서와 연관된 css의 선택자이다.
