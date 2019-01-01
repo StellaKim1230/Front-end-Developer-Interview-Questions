@@ -98,23 +98,16 @@ permalink: /questions/css-questions/index.html
 * What is the CSS `display` property and can you give a few examples of its use?
   - 요소를 어떻게 보여줄지를 결정한다.
 * What's the difference between inline and inline-block?
+  - none : 보이지 않음
   - block
-    - 부모 컨테이너의 너비를 채운다(크기)
-    - 새 줄에서 시작하고 그 옆에 HTML 요소를 허용하지 않는다.
-    - width, height 지정 가능
-    - vertical-align 정렬 불가능
-    - margin, padding 모든 방향에서 가능
+    - <div>, <p> 태그 등이 이에 해당된다
+    - 가로 길이가 기본적으로 100%이며, block인 태그를 이어서 사용하면 줄바꿈 되어 보인다.
+    - width, height 속성을 지정 할 수 있으며, 레이아웃 배치시 주로 사용한다.
   - inline-block
-    - 내용에 따라 달라진다 (크기)
-    - 위치는 다른 콘텐츠와 함게 흐르고 다른 요소는 옆에 있는 것을 허용한다.
-    - width, height 가능
-    - vertical-align 정렬 불가능
-    - margin, padding 모든 방향에서 가능
+    - block과 inline 의 중간 형태라고 볼 수 있다. 줄 바꿈이 되지는 않지만 크기를 지정할 수 있다.
   - inline
-    - 내용에 따라 달라진다. (크기))
-    - 위치는 다른 콘텐츠와 함께 흐르고 다른 요소는 옆에 있는 것을 허용한다.
-    - width, height, vertical-align 불가능
-    - margin, padding : 수평방향만 가능
+    - <span>, <b>, <i> 태그 등이 해당된다.
+    - block과 달리 줄 바꿈이 되지 않고, width와 height 지정 할 수 없다.
 * What's the difference between the "nth-of-type()" and "nth-child()" selectors?
   - 둘 다 순서와 연관된 css의 선택자이다.
   - nth-child : 모든 자식 요소의 순서에서 찾음
