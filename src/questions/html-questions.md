@@ -39,9 +39,10 @@ permalink: /questions/html-questions/index.html
 * Why is it generally a good idea to position CSS `<link>`s between `<head></head>` and JS `<script>`s just before `</body>`? Do you know any exceptions?
   - body 태그 안에 script를 넣는 이유는 script태그는 다운로드되고 실행되는 동안 html 파싱을 차단합니다. 스크립트를 맨 아래에서 다운로드하면 html을 먼저 파싱하여 사용자에게 표시할 수 있다.
 * What is progressive rendering?
-  - 콘텐츠를 가능한 한 빨리 표시하기 위해 웹 페이지의 성능을 향상시키는 데 사용되는 기술이다. 구성 요소의 표시 우선 순위 지정해서 로드한다.
+  - 콘텐츠를 가능한 한 빨리 표시하고, 웹 페이지의 성능을 향상시키는 데 사용되는 기술이다.
+  - 이 기술에는 페이지 로드시 모든 이미지를 로드하는 대신 브라우저 뷰포트에 들어올때 뷰의 픽셀을 계산하여 일부 자바스크립트가 계산된 픽셀만큼 이미지를 로드하는 방식이 있고, 서드파티가 HTML에 로드되는 경우 메인 컨텐트를 로드 시킨 후 서드파티를 로드시킨다. 예를 들어 사이드바와 메인화면이 있으면 사이드바 보다는 메인 화면을 먼저 로드시키는 방법으로 고려해야 한다.
+  - 이러한 기술은 사용자에게 빠른 웹환경을 제공하기 위해 고안된 기술이다.
 * Why you would use a `srcset` attribute in an image tag? Explain the process the browser uses when evaluating the content of this attribute.
-  - 기기의 디스플레이 너비에 따라 다른 이미지를 사용자에게 제공하려는 경우 `srcset` 속성을 사용한다. 
-  - 레티나 디스플레이를 통해 장치에 고품질 이미지를 제공하여 사용자 경험을 향상시키고, 저해상도 이미지를 저사양 기기에 제공하여 성능을 높이고 데이터 낭비를 줄인다.
-  - 
+  - 기기의 디스플레이 너비에 따라 다른 이미지를 사용자에게 제공하려는 경우 `srcset` 속성을 사용한다.
+  - srcset을 사용하는 이유는, 레티나 디스플레이를 통해 장치에 고품질 이미지를 제공하여 사용자 경험을 향상시키고, 저해상도 이미지를 저사양 기기에 제공하여 성능을 높이고 데이터 낭비를 줄일수 있습니다.  
 * Have you used different HTML templating languages before? (다른 HTML 템플릿 언어를 사용해본 적이 있습니까?)
