@@ -267,7 +267,7 @@ permalink: /questions/javascript-questions/index.html
   - 내장 JavaScript 객체를 확장한다는 것은 prototype에 속성/함수를 추가한다는 것을 의미합니다. 이것은 처음에는 좋은 생각처럼 보일 수 있지만 실제로는 위험하다. 여러분의 코드가 동일한 contains 메소드를 추가함으로써 Array.prototype 을 확장하는 여러가지 라이브러리를 사용한다고 상상해본다. 이러한 구현은 메소드를 서로 덮어쓰게 되며 이 두 메소드의 동작이 동일하지 않으면 코드가 망가질 것이다. 네이티브 객체를 확장할 수 있는 유일한 경우는 폴리필을 만들려고 할 떄이다. JavaSCript 사양의 일부이지만 오래된 브라우저이기 때문에 사용자 브라우저에 없을 수도 있는 메서드에 대한 고유한 구현을 제공해야 할 경우이다.
 * Difference between window load event and document DOMContentLoaded event?
   - DOMContentLoaded 이벤트는 스타일시트, 이미지, 서브프레임이 로딩을 기다리지 않고 초기 HTML 문서가 완전히 로드되고 파싱될 때 발생한다.
-  - window의 load 이벤트는 DOM과 모든 종속 리소스와 에셋들이 로드된 후에만 발생한다.
+  - window의 load 이벤트는 DOM과 모든 리소스와 에셋들이 로드된 후에만 발생한다.
 * What is the difference between `==` and `===`?
   - == 는 추상 동등 연산자이고 === 는 완전 동등 연산자이다. == 연산자는 타입 변환이 필요한 경우 타입 변환을 한 후에 동등한지 비교할 것이다. === 연산자는 타입 변환을 하지 않으므로 두 값이 같은 타입이 아닌 경우 ===는 단순히 false를 반환한다 (=== 는 타입 체크까지 해준다)
 * Explain the same-origin policy with regards to JavaScript.
