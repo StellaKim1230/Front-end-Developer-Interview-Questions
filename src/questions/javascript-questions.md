@@ -300,6 +300,12 @@ duplicate([1,2,3,4,5]); // [1,2,3,4,5,1,2,3,4,5]
     * 서로 다른 엄격한 모드로 작성된 스크립트를 병합하면 문제가 발생할 수 있다.
 * Create a for loop that iterates up to `100` while outputting **"fizz"** at multiples of `3`, **"buzz"** at multiples of `5` and **"fizzbuzz"** at multiples of `3` and `5`
 * Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it?
+  ```
+  for (let i = 1; i<=30; i++) {
+    var f = i % 3 == 0, b = i % 5 == 0
+    console.log( f ? b? 'FIZZBUZZ' :  'Fizz' : b ? 'Buzz' : i)
+  }
+  ```
   - 모든 스크립트는 전역 스코프에 접근할 수 있으며 모든 사람이 전역 네임스페이스를 사용하여 변수를 정의하면 충돌이 발생할 수 있다. 모듈 패턴(IIFEs)을 사용하여 변수를 로컬 네임페이스 내에 캡슐화해야한다.
 * Why would you use something like the `load` event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?
   - load 이벤트는 문서로딩 프로세스가 끝날 때 발생된다. 이 시점에서 문서의 모든 객체가 DOM에 있고, 모든 이미지, 스크립트, 링크 및 하위 프레임로딩이 완료된다. DOM 이벤트 DomContentLoaded는 페이지의 DOM이 생성된 후에 발생하지만 다른 리소스가 로딩되기를 기다리지 않습니다. 이것은 초기화되기 전까지 전체 페이지가 로드될 필요가 없는 경우에 선호된다.
