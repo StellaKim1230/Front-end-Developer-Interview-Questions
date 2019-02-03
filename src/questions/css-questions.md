@@ -6,6 +6,7 @@ permalink: /questions/css-questions/index.html
 
 * What is CSS selector specificity and how does it work? (css 선택자 명시도는 무엇이며 어떻게 작동 되는가?)
 [반드시 기억해야하는 선택자 30개](https://code.tutsplus.com/ko/tutorials/the-30-css-selectors-you-must-memorize--net-16048)
+  - 선택자란 말 그대로 선택을 해주는 요소입니다. 이를 통해 특정 요소들을 선택하여 스타일을 적용할 수 있게 됩니다.
   - specificity는 브라우저가 어떤 css 속성값이 요소와 가장 관련이 있고 따라서 적용되는 지를 결정한다.
   - type 선택자(ex: h1) 및 가상 요소(ex: :before) > class 선택자 > id 선택자
   - 요소에 추가된 인라인 스타일 ( style = "font-weight:bold")은 항상 외부 스타일시트의 모든 스타일을 덮어쓰고, 따라서 가장 높은 명시도를 갖는 것으로 생각 할 수 있다.
