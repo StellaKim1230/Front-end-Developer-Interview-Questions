@@ -134,10 +134,11 @@ permalink: /questions/css-questions/index.html
   </style>
   ```
 * What's the difference between a relative, fixed, absolute and statically positioned element?
-  - static : 기본 위치. 요소는 평소와 같이 페이지에 위치합니다.
-  - relative : 별도의 프로퍼티를 지정하지 않는 이상 static과 동일하게 동작한다. 상대 위치가 지정된 엘리먼트에 top, right, bottom, left를 지정하면 기본 위치와 다르게 위치가 조정된다.
-  - fixed : 뷰 포트에 상대적으로 위치가 지정되는데, 이는 페이지가 스크롤되더라도 늘 같은 곳에 위치한다.
+  - static : 기본 위치. `static`엘리먼트는 위치가 지정된 것이 아니라고 표현하며, `static`이 아닌 다른 값으로 지정된 엘리먼트에 대해 위치가 지저오댔다고 표한한다.
+  - relative : 별도의 프로퍼티를 지정하지 않는 이상 static과 동일하게 동작한다. 상대 위치가 지정된 엘리먼트에 top, right, bottom, left를 지정하면 기본 위치와 다르게 위치가 조정된다. 다른 콘텐츠는 해당 엘리먼트에서 남긴 공백에 맞춰 들어가게끔 조정되지 않는다.
+  - fixed : 뷰포트에 상대적으로 위치가 지정되는데, 페이지가 스크롤되더라도 늘 같은곳에 위치한다는 뜻이다.
   - absolute : 뷰포트에 상대적으로 위치가 지정되는게 아니라 가장 가까운 곳에 위치한 부모 요소에 상대적으로 위차가 지정된다는 점을 제외하면 fixed와 비슷하게 동작한다.
+  [참고자료](https://ko.learnlayout.com/position.html)
 * What existing CSS frameworks have you used locally, or in production? How would you change/improve them?
   - 
 * Have you played around with the new CSS Flexbox or Grid specs?
