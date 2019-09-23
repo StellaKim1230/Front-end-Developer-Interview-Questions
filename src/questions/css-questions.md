@@ -111,8 +111,8 @@ permalink: /questions/css-questions/index.html
     - block과 달리 줄 바꿈이 되지 않고, width와 height 지정 할 수 없다.
 * What's the difference between the "nth-of-type()" and "nth-child()" selectors?
   - 둘 다 순서와 연관된 css의 선택자이다.
-  - nth-child : 모든 자식 요소의 순서에서 찾음
-  - nth-of-type : 해당하는 자식 태그 요소에서의 순서를 찾음
+  - nth-child : 부모 엘리먼트의 모든 자식 엘리먼트중 n 번째
+  - nth-of-type : 부모 엘리먼트의 특정 자식 엘리먼트중 n 번째
   ```<div>
       <p>test line 1</p> //X
       <span>test line 2</span> //노랑
