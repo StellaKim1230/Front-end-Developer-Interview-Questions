@@ -113,21 +113,24 @@ permalink: /questions/css-questions/index.html
   - 둘 다 순서와 연관된 css의 선택자이다.
   - nth-child : 부모 엘리먼트의 모든 자식 엘리먼트중 n 번째
   - nth-of-type : 부모 엘리먼트의 특정 자식 엘리먼트중 n 번째
-  ```<div>
-      <p>test line 1</p> //X
-      <span>test line 2</span> //노랑
-      <p>test line3</p> //빨강
-      <p>test line4</p> //그린
-      <span>test line5</span> //X
-    </div>
+  ```
+  <div class="box">
+    <p>1. p태그 1</p>
+    <span>2. span태그 2</span>
+    <p>3. p태그 3</p>
+    <span>4. span태그 4</span>
+    <p>5. p태그 5</p>
+  </div>
   ```
   ```
   <style>
-   p:nth-of-type(2) { color: red; }
-   p:nth-child(2) { color: blue; }
-   p:nth-child(4) { color: green; }
-   span:nth-child(1) { color: orange; }
-   span:nth-of-type(1) { color: yellow; }
+   .box > p:nth-child(5) {
+     color: red;  // 5 번
+   }
+
+   .box > p:nth-of-type(3) {
+     color: red; // 5 번
+   }
   </style>
   ```
 * What's the difference between a relative, fixed, absolute and statically positioned element?
