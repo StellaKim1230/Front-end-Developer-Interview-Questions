@@ -57,3 +57,5 @@ permalink: /questions/html-questions/index.html
 * Describe reflow and repaint
   - reflow: 생성된 dom 노드의 레이아웃 수치(너비, 높이, 위치 등)변경 시 영향 받은 모든 노드의(자신, 자식, 부모, 조상) 수치를 다시 계산하여 렌더트리를 재생성한다. reflow 과정이 끝난 후에 재 생성된 렌더트리를 다시 그리는 과정을 repaint라고 한다.
   - repaint: reflow 발생 이유와 같이 스타일의 모든 변경이 레이아웃 수치에 영향을 받는 것은 아니다. `background-color, visibility, outline` 등의 스타일 변경 시에는 레이아웃 수치가 변경되지 않으므로 reflow 과정이 생략된 repaint 과정만 일어난다.
+* DOM 이란 무엇인가? (Dom Object Model)
+  - `<html></html>`, `<body></body>` 같은 html 문서의 태그들을 Javascript가 이용할 수 있는 객체로 만든 것을 문서 객체라고 한다.

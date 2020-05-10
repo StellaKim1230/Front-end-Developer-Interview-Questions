@@ -16,6 +16,8 @@ This file contains a number of front-end interview questions that can be used wh
   1. [Network Questions](src/questions/network-questions.md)
   1. [Coding Questions](src/questions/coding-questions.md)
   1. [Fun Questions](src/questions/fun-questions.md)
+  1. [WebFundamental Questions](src/questions/web-fundamental-questions.md)
+  1. [UI Library Questions](src/questions/ui-library-questions.md)
 
 ## Getting Involved
 
