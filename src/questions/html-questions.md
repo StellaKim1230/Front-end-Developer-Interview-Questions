@@ -6,6 +6,14 @@ permalink: /questions/html-questions/index.html
 
 * What does a `doctype` do?
   - (Document Type) 문서 형식은 HTML 버전과 종류를 명시함으로써, 브라우저가 문서를 해석하고 출력하는데 직접적인 영향을 준다.
+* What does a `meta tag` do?
+  - head 태그에 들어간다.
+  - meta 태그는 metadata(정보에 대한 정보)를 제공한다. 쉽게 말해, 사이트 자체에 대한 정보나, 저작자, 문서의 언어 등을 포함한다. 화면에 표시되는 것은 없지만, 검색 엔진이나 브라우저에 읽힌다.
+  - meta 태그는 보통 name과 value 쌍으로 사용 된다.
+  - 검색 엔진을 위한 키워드에서는 `<meta name="keywords" content="HTML, CSS, JavaScript">`
+  - 사이트에 대한 설명은 `<meta name="description" content="html css 자바스크립트 강좌">`
+  - 사이트 저작자 표시 `<meta name="author" content="지구별에">`
+  - html 에서 `<meta>` 태그는 끝내는 태그가 없다.
 * How do you serve a page with content in multiple languages? (여러 언어로 되어 있는 콘텐츠의 페이지를 어떻게 제공하나요?)
   - HTTP를 서버에 요청하면 대개 요청하는 사용자 에이전트가 `Accept-Language` 헤더와 같은 언어 기본 설정에 대한 정보를 보낸다. 그런 다음 서버는 이 정보를 사용하여 해당 언어가 사용 가능한 경우 해당 언어로 된 문서 버전을 반환 할 수 있다. 반환된 HTML 문서는 `<html lang="en">...</html>` 같이 `<html>` 태그에 `lang` 속성을 선언해야 한다.
 * What kind of things must you be wary of when design or developing for multilingual sites?(다국어 사이트를 디자인하거나 개발할 때 주의해야 할 사항은 무엇인가?)
@@ -35,7 +43,7 @@ permalink: /questions/html-questions/index.html
   - 기본적으로 웹 브라우저가 외부 자바스크립트를 불러오는 일반 script 태그를 만나게 되면, 우선 해당 스크립트를 내려받아 실행하는데, 실행할 때 까지 웹 문서의 HTML 코드 파싱 작업을 잠시 뒤로 미룬다.
   - async 혹은 defer 된 스크립트 문서는 parsing 작업의 중단 없이 동시에 내려받게 되는데, 둘의 차이를 결정짓는 중요한 것은 바로 스크립트 실행되는 시점이 다르다.
   - async는 스크립트를 내려받는 즉시 바로 실행되는데 반해 defer는 문서의 parsing 작업이 끝난 후에 실행된다.
-  - script가 문서를 직접 만지고 조작하거나 서로 간 로딩 순서가 중요할떄는 defer 속성을 쓰고, 그렇지 않다면 async 속성을 써서 웹페이지 로딩 속도를 줄인다.
+  - script가 문서를 직접 만지고 조작하거나 서로 간 로딩 순서가 중요할때는 defer 속성을 쓰고, 그렇지 않다면 async 속성을 써서 웹페이지 로딩 속도를 줄인다.
 * Why is it generally a good idea to position CSS `<link>`s between `<head></head>` and JS `<script>`s just before `</body>`? Do you know any exceptions?
   - body 태그 안에 script를 넣는 이유는 script태그는 다운로드되고 실행되는 동안 html 파싱을 차단합니다. 스크립트를 맨 아래에서 다운로드하면 html을 먼저 파싱하여 사용자에게 표시할 수 있다.
 * What is progressive rendering?
@@ -46,3 +54,6 @@ permalink: /questions/html-questions/index.html
   - 기기의 디스플레이 너비에 따라 다른 이미지를 사용자에게 제공하려는 경우 `srcset` 속성을 사용한다.
   - srcset을 사용하는 이유는, 레티나 디스플레이를 통해 장치에 고품질 이미지를 제공하여 사용자 경험을 향상시키고, 저해상도 이미지를 저사양 기기에 제공하여 성능을 높이고 데이터 낭비를 줄일수 있습니다.  
 * Have you used different HTML templating languages before? (다른 HTML 템플릿 언어를 사용해본 적이 있습니까?)
+* Describe reflow and repaint
+  - reflow: 생성된 dom 노드의 레이아웃 수치(너비, 높이, 위치 등)변경 시 영향 받은 모든 노드의(자신, 자식, 부모, 조상) 수치를 다시 계산하여 렌더트리를 재생성한다. reflow 과정이 끝난 후에 재 생성된 렌더트리를 다시 그리는 과정을 repaint라고 한다.
+  - repaint: reflow 발생 이유와 같이 스타일의 모든 변경이 레이아웃 수치에 영향을 받는 것은 아니다. `background-color, visibility, outline` 등의 스타일 변경 시에는 레이아웃 수치가 변경되지 않으므로 reflow 과정이 생략된 repaint 과정만 일어난다.

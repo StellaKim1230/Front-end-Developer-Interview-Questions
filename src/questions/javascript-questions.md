@@ -5,20 +5,54 @@ permalink: /questions/javascript-questions/index.html
 ---
 
 * event bubbling
-  - 특정 요소에서 이벤트가 발생했을 때 해당 이벤트가 상위 요소들로 전달되어 가는 특성
+  - 특정 화면 요소에서 이벤트가 발생했을 때 해당 이벤트가 더 상위의 화면 요소들로 전달되어 가는 특성을 말한다.
 * event capturing
-  - 이벤트 버블링과 반대 방향으로 이벤트가 전달되어 가는 방식
-* event stopPropagation
-  - 이벤트가 전파 되는것을 막는다. 예를들어, 이벤트 버블링의 경우 클릭한 요소의 이벤트만 발생시키고 상위 요소로 이벤트를 전달하는 것을 막는다.
-* Explain event delegation
+  - 이벤트 버블링과 반대 방향으로 진행되는 이벤트 전파 방식이다. (클릭 이벤트가 발생한 지점을 찾아서 내려간다.)
+  - 방법 : `addEventListener() 에서 cature: true`를 설정한다.
+* event stopPropagation and event preventDefault
+  - 이벤트 전달 방식 없이 원하는 화면 요소의 이벤트만 발생시킬 때 사용한다.
+  - 이벤트 버블링의 경우 클릭한 요소의 이벤트만 발생시키고 상위 요소로 이벤트를 전ㄷ라하는 것을 방해한다. 이벤트 캡쳐링의 경우에는 클릭한 요소의 최상위 요소의 이벤트만 동작시키고 하위 요소들로 이벤트를 전달하지 않는다.
+  - `preventDefault()`는 a 태그 처럼 클릭 이벤트 외에 별도의 브라우저 행동을 막기 위해 사용된다.
+  - `stopPropagation + preventDefault = return false`
+* Explain event delegation (이벤트 위임)
   - 하위 요소에 각각 이벤트를 붙이지 않고 상위 요소에서 하위 요소의 이벤트를 제어하는 방식
+  ```javascript
+  <ul class="itemlist">
+    <li>
+      <input type="checkbox" id="item1">
+      <label for="item1">이벤트 버블링 학습<label>
+    </li>
+    <li>
+      <input type="checkbox" id="item2">
+      <label for="item2">이벤트 캡쳐 학습<label>
+    </li>
+  </ul>
+
+  const inputs = document.querySelectAll('input')
+  inputs.forEach((input) => {
+    input.addEventListener('click', e => {
+      alert('clicked')
+    })
+  })
+  ```
+  - 위 코드에서는 할일이 추가되어 jquery로 할일 하나를 추가 하면 마지막에 추가한 리스트에는 이벤트 리스너가 동작하지 않는다. 이유는 input 박스에 클릭 이벤트 리스너를 추가하는 시점에서 리스트 아이템은 두개이다. 따라서, 새롭게 추가된 리스트 아이템에는 클릭 이벤트 리스너가 등록되지 않았다. 이런식으로 매번 새롭게 추가된 리스트 아이템을 일일이 이벤트 리스너를 다는 작업은 번거롭다. 이 번거로운 작업을 해결 할 수 있는 방법이 event delegation 이다.
+  ```javascript
+  const itemList = document.querySelector('.itemlist')
+  itemList.addEventListener('click', e => {
+    alert('clicked')
+  })
+  ```
+  - 화면의 모든 input box에 일일이 이벤트 리스너를 추가하는 대신 이제는 input box의 상위 요소인 ul tag인 .itemlist에 이벤트 리스너를 달아놓고 하위에서 발생한 클릭 이벤트를 감지한다. 이것이 이벤트 버블링이다.
 * Explain how `this` works in JavaScript
+  - 메소드를 호출한 객체가 저장되어 있는 속성이다.
   - this는 함수가 호출되는 방식에 따라 달라진다.
-  - 함수를 호출할 때 new 키워드를 사용하는 함수 내부에 있는 this는 완전히 새로운 객체이다.
+  - (일반함수 에서) 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 this에 바인딩할 객체가 동적으로 결정된다.
+  - (화살표함수 에서) 함수를 선어할 때 this에 바인딩할 객체가 정적으로 결정된다. 동적으로 결정되는 일반함수와 달리 화살표 함수의 this는 언제나 상위 스코프의 this를 가리킨다.
+  - 함수 실행에서의 this: 전역객체
+  - 함수 실행에서 엄격모드의 this: undefined
+  - 생성자 호출에서의 this: 생성자 함수 내의 this는 new를 통해 만들어진 새로운 변수가 된다.
+  - 객체 내 메소드호출 에서의 this: 해당 메소드를 호출한 객체
   - apply, call, bind가 함수의 호출 / 작성에 사용되는 경우 함수 내의 this는 인수로 전달된 객체다.
-  - obj.method()와 같이 함수를 메서드로 호출하는 경우 this는 함수가 프로퍼티인 객체이다.
-  - 함수가 자유함수로 호출되는 경우 즉 위의 조건 없이 호추되는 경우 this는 전역 객체이다. 브라우저에서는 window 객체이다. 엄격모드('use strict') 일 경우 this는 전역 객체 대신 undefined 입니다.
-  - 함수가 화살표 함수인 경우 모든 규칙을 무시하고 생성된 시점에서 주변 스코프의 this 값을 받는다.
 * Explan prototype [참고링크](http://www.nextree.co.kr/p7323/)
   - javascript는 클래스라는 개념이 없다. 기존의 객체를 복사하여 새로운 객체를 생성하는 프로토타입 기반의 언어다. 프로로타입의 단어 뜻은 원형이라는 뜻이며, 프로토타입 기반 언어는 객체 원형인 프로토타입을 이용하여 새로운 객체를 만들어 냅니다. 이렇게 생성된 객체 역시 또 다른 객체의 원형이 될 수 있다.
 * 함수와 객체의 내부 구조 (Person 이라는 함수가 있다고 가정)
@@ -111,12 +145,12 @@ permalink: /questions/javascript-questions/index.html
     - `f(function foo(){})()` or `(function foo(){}())` 입니다.
 * What's the difference between a variable that is: `null`, `undefined` or undeclared?
   - `undeclared` : 선언되지 않은 변수는 변수에 값을 할당하기 전에 (var, let, const)를 사용하여 생성되지 않은 변수에 값을 할당할 때 생성된다. `use strict` 하면 ReferenceError 발생시킴
-  - `undefined` : 변수는 선언되었지만 값이 할당되지 않은 변수, 자료형이 결정되지 않은 변수
-  - `null` : 변수를 선언하고 null이라는 빈 값을 할당한 경우, 자료형은 객체인데 비어있는 변수
-  - undefined == null --> true // == 비교연산자는 자료형이 다르면 자동 형변환으로 자료형을 강제로 맞춰서 비교하는 비교연산자이다. undefined와 null(object) 는 자료형이 다르니 자바스크립트 엔진이 알아서 통일해서 둘다 값이 없으니까 true를 반환한다. 이 경우 ===연산자(자료형까지 비교)를 사용해야 한다.
-  * How would you go about checking for any of these states?
+  - `undefined` : 변수는 선언되었지만(메모리에 할당됨) 값이 할당되지 않은 변수, 자료형이 결정되지 않은 변수.
+  - `null` : 변수를 선언하고(메모리에 할당됨) null이라는 빈 값을 할당한 경우, 자료형은 객체인데 비어있는 변수
+  - undefined == null --> true // == 비교연산자는 자료형이 다르면 자동 형변환으로 자료형을 강제로 맞춰서 비교하는 비교연산자이다. undefined와 null(object) 는 자료형이 다르니 자바스크립트 엔진이 알아서 통일해서 둘다 값이 없으니까 true를 반환한다. 이 경우 === 연산자(자료형까지 비교)를 사용해야 한다.
 * What is a closure, and how/why would you use one?
-  - 클로저는 외부함수의 변수와 매개변수에 접근 할 수 있는 내부함수를 말한다. 클로저는 함수와 그 함수가 선언된 렉시컬 환경의 조합이다. "렉시컬"은 렉시컬 범위 지정이 변수가 사용 가능한 위치를 결정하기 위해 소스 코드 내에서 변수가 선언된 위치를 사용한다는 사실을 나타낸다. 핵심 : 클로저는 외부 함수가 반환된 후에도 외부 함수의 변수 범위 체인에 접근 할 수 있는 내부함수이다.
+  - 외부 함수가 반환된 후에도 외부 함수의 변수 범위에 접근할 수 있는 내부 함수이다.
+  - 내부 함수의 `[[scopes]]`프로퍼티는 자신의 실행 컨텍스트가 자신을 포함하는 외부 함수의 실행 환경과 전역 객체를 가리킨다. 이때 자신을 포함하는 외부 함수의 실행 컨텍스트가 소멸하여도 `[[scopes]]`프로퍼티가 가리키는 외부함수의 활성객체는 소멸하지 않고 참조할수 있다.
   - 데이터를 private하게 사용하기 위해
 * Can you describe the main difference between a `forEach` loop and a `.map()` loop and why you would pick one versus the other?
   - forEach : 배열의 요소를 반복한다, 각 요소에 대한 콜백을 실행한다, 값을 반환하지 않는다.
