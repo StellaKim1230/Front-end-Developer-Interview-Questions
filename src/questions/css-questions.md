@@ -163,3 +163,15 @@ div {
   margin: 0 auto;
 }
 ```
+* position
+  - absolute : 뷰포트에 상대적으로 위치가 지정되는게 아니라 가장 가까운 곳에 위치한 부모 엘리먼트에 상대적으로 위치가 지정된다.
+* clear fix
+  - HTML 문서 구조에서 부모 요소가 자식 요소를 감싸고 있을 때, 자식 요소에게 float 형식을 적용하면 부모 요소가 자식 요소를 더 이상 감싸지 않게되고 높이 값을 파악하지 못하게 되는 버그가 발생된다. 부모 요소가 다시 자식 요소를 감쌀 수 있게 float을 초기화하여 버그를 고쳐주는 것을 clearfix라고 한다.
+* mixin, placeholder ? __파일명 등 import render
+* display: none → 아예 사라지게 하는 것, 보이지도 않고 해당 공간도 존재하지 않음.
+* visibility: hidden → 보이지만 않고 해당 공간은 존재. width와 height값을 주었다면 그만큼 공간은 존재함.
+* css 선택자 우선순
+  - !important > 인라인 스타일 속성 > 아이디 선택자 > 클래스/속성/가상 선택자 > 태그 선택자
+* box-sizing : 박스의 크기를 어떤 것으로 기준으로 계산할지를 정하는 속성이다.
+* css modules 사용
+* box-sizing으로 어떻게 해야 웹반응형을 잘 할까

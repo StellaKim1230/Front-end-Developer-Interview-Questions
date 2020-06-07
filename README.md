@@ -19,6 +19,7 @@ This file contains a number of front-end interview questions that can be used wh
   1. [WebFundamental Questions](src/questions/web-fundamental-questions.md)
   1. [UI Library Questions](src/questions/ui-library-questions.md)
   1. [DataStructure Questions](src/questions/datastructure-questions.md)
+  1. [Computer Science](src/questions/computer-science.md)
 
 ## Getting Involved
 
